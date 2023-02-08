@@ -1,0 +1,10 @@
+#include "NamespaceRedirect.h"
+
+namespace demoRNW68
+{
+    [default_interface]
+    runtimeclass MainPage : XAML_NAMESPACE.Controls.Page
+    {
+        MainPage();
+    }
+}
