@@ -8,49 +8,70 @@
  * @format
  */
 
-import React from 'react';
+import React, { useRef, useCallback } from 'react';
 import { View } from 'react-native';
 import { WebView } from 'react-native-webview';
+import Plot from 'react-plotly.js';
 
 
 const html = `
-<!DOCTYPE html>
-<html>
-  <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <style> #hello {background-color: red;} </style>
-  </head>
-  <body>
-    <p id="hello">Hello WebView</p>
-  </body>
-</html>
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <style> #hello {background-color: red;} </style>
+        </head>
+        <body>
+            <p id="hello">Hello WebView</p>
+        </body>
+    </html>
 `
 
 const javascript = `
-    console.log('injectedJavaScript');
+    console.log('injectJavaScript');
     document.getElementById('hello').style.backgroundColor = 'green';
     true;
 `
+var data: any = [{
+    x: [1999, 2000, 2001, 2002],
+    y: [10, 15, 13, 17],
+    type: 'scatter'
+}];
 
-const App = () => {
 
-  let handleLoadEnd = () => {
-    console.log('onLoadEnd');
-  };
-
-  return (
-    <View style={{ flex: 1 }}>
-      <WebView
-        useWebView2={true}
-        source={{ html: html }}
-        onMessage={() => {}}
-        onLoadEnd={handleLoadEnd}
-        injectJavaScript={javascript}
-        injectedJavaScriptBeforeContentLoaded={javascript}
-      />
-    </View>
-  );
+var layout: any = {
+    title: 'Sales Growth',
+    xaxis: {
+        title: 'Year',
+        showgrid: false,
+        zeroline: false
+    },
+    yaxis: {
+        title: 'Percent',
+        showline: false
+    }
 };
 
+const App = () => {
+    const webViewRef = useRef<WebView>(null);
+
+    const handleLoadEnd = useCallback(() => {
+        console.log("handleLoadEnd");
+        webViewRef.current?.injectJavaScript(javascript);
+    },[])
+
+    return (
+        <View style={{flex: 1}}>
+            <WebView
+                ref={webViewRef}
+                source={{html: html}}
+                onLoadEnd={handleLoadEnd}
+                onMessage={() => {}}
+            />
+        </View>
+    );
+}
+
 export default App;
+
