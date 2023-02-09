@@ -12,6 +12,7 @@ import React, { useRef, useCallback } from 'react';
 import { View } from 'react-native';
 import { WebView } from 'react-native-webview';
 import Plot from 'react-plotly.js';
+import Plotly from './node_modules/plotly.js/dist/plotly-custom.min.js';
 
 
 const html = `
@@ -53,6 +54,7 @@ var layout: any = {
     }
 };
 
+
 const App = () => {
     const webViewRef = useRef<WebView>(null);
 
@@ -60,6 +62,17 @@ const App = () => {
         console.log("handleLoadEnd");
         webViewRef.current?.injectJavaScript(javascript);
     },[])
+
+    const invoke = (str: string) => {
+        if (webViewRef && webViewRef.current)
+            webViewRef.current.injectJavaScript(`(function(){${str}})()`);
+    };
+    
+    const invokeEncoded = (str: string) => {
+        invoke(`eval(atob("${str}"));`);
+    };
+
+    // invoke(JSON.stringify(Plotly));
 
     return (
         <View style={{flex: 1}}>
