@@ -11,8 +11,7 @@
 import React, { useRef, useCallback } from 'react';
 import { View } from 'react-native';
 import { WebView } from 'react-native-webview';
-import Plot from 'react-plotly.js';
-import Plotly from './node_modules/plotly.js/dist/plotly-custom.min.js';
+import Plotly from './lib/PlotlyBasic';
 
 
 const html = `
@@ -25,6 +24,7 @@ const html = `
         </head>
         <body>
             <p id="hello">Hello WebView</p>
+            <div id="chart"></div>
         </body>
     </html>
 `
@@ -58,21 +58,34 @@ var layout: any = {
 const App = () => {
     const webViewRef = useRef<WebView>(null);
 
-    const handleLoadEnd = useCallback(() => {
-        console.log("handleLoadEnd");
-        webViewRef.current?.injectJavaScript(javascript);
-    },[])
-
+    
     const invoke = (str: string) => {
-        if (webViewRef && webViewRef.current)
-            webViewRef.current.injectJavaScript(`(function(){${str}})()`);
+        webViewRef?.current?.injectJavaScript(`(function(){${str}})()`);
     };
     
     const invokeEncoded = (str: string) => {
         invoke(`eval(atob("${str}"));`);
     };
-
-    // invoke(JSON.stringify(Plotly));
+    
+    const createPlot = (data: any, layout?: any, config?: any) => {
+        invoke(`
+            window.Plotly.newPlot(
+                'chart',
+                ${JSON.stringify(data)},
+                ${JSON.stringify(layout)},
+                ${JSON.stringify(config)}
+                ).then(function() {
+                    window.ReactNativeWebView.postMessage('Chart Loaded');
+                });
+            `);
+        };
+        
+    const handleLoadEnd = useCallback(() => {
+        console.log("handleLoadEnd");
+        webViewRef?.current?.injectJavaScript(javascript);
+        invokeEncoded(Plotly);
+        createPlot(data, layout);
+    },[])
 
     return (
         <View style={{flex: 1}}>

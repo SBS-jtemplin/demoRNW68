@@ -14,6 +14,7 @@
     "plotly.js": "^2.18.1",
     "react": "17.0.2",
     "react-native": "0.68.2",
+    "react-native-fs": "^2.20.0",
     "react-native-plotly": "^6.0.0",
     "react-native-webview": "^11.26.1",
     "react-native-windows": "0.68.26",
