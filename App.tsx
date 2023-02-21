@@ -55,7 +55,7 @@ const App = () => {
 
     const invoke = (str: string) => {
         if (webViewRef && webViewRef.current){
-            webViewRef?.current?.injectJavaScript(str);
+            webViewRef.current.injectJavaScript(str);
         }
     };
 
