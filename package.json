@@ -11,7 +11,7 @@
     "windows": "react-native run-windows"
   },
   "dependencies": {
-    "@sea-birdscientific/typescript-data-visualization": "file:../../npm/sea-birdscientific-typescript-data-visualization-0.0.30.tgz",
+    "@sea-birdscientific/typescript-data-visualization": "file:../../npm/sea-birdscientific-typescript-data-visualization-0.0.50.tgz",
     "plotly.js": "^2.18.1",
     "react": "17.0.2",
     "react-native": "0.68.5",

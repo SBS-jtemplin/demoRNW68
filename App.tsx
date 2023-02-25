@@ -1,5 +1,6 @@
-import React, { ReactElement } from 'react';
-import { PlotlyWebView } from '@sea-birdscientific/typescript-data-visualization/dist/DataVisualization'
+import React, { ReactElement, useRef } from 'react';
+import { Button, View } from 'react-native';
+import { PlotlyWebView, PlotlyWebViewHandle } from '@sea-birdscientific/typescript-data-visualization/dist'
 
 
 let data: any = [{
@@ -26,12 +27,36 @@ const layout: any = {
 
 
 const App = (): ReactElement => {
+    const plotlyWebViewRef = useRef<PlotlyWebViewHandle>(null)
     return (
-        // <></>
-        <PlotlyWebView
-            // data={data}
-            // layout={layout}
-        />
+        <View style={{flex: 1}}>
+        <View style={{flexDirection: 'row', alignItems: 'stretch'}}>
+            <Button
+                onPress={() => {
+                    if (plotlyWebViewRef && plotlyWebViewRef.current){
+                        plotlyWebViewRef.current.createPlot(data, layout)
+                    }
+                }}
+                title="Create Plot"
+            />
+            <Button
+                onPress={() => {
+                    if (plotlyWebViewRef && plotlyWebViewRef.current){
+                        plotlyWebViewRef.current.updatePlot(data, layout)
+                    }
+                }}
+                title="Update Plot"
+            />
+        </View>
+        <View style={{flex: 1}}>
+            <PlotlyWebView
+                ref={plotlyWebViewRef}
+                data={data}
+                layout={layout}
+            />
+        </View>
+    </View>
+
     );
 }
 
