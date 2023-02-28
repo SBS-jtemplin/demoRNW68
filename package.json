@@ -11,15 +11,14 @@
     "windows": "react-native run-windows"
   },
   "dependencies": {
-    "@sea-birdscientific/typescript-data-visualization": "file:../../npm/sea-birdscientific-typescript-data-visualization-0.0.50.tgz",
-    "plotly.js": "^2.18.1",
+    "@sea-birdscientific/typescript-data-processing": "file:../../npm/sea-birdscientific-typescript-data-processing-0.0.2.tgz",
+    "@sea-birdscientific/typescript-data-visualization": "file:../../npm/sea-birdscientific-typescript-data-visualization-0.0.51.tgz",
     "react": "17.0.2",
     "react-native": "0.68.5",
     "react-native-fs": "^2.20.0",
     "react-native-macos": "^0.68.0-0",
     "react-native-webview": "^11.26.1",
-    "react-native-windows": "0.68.26",
-    "react-plotly.js": "^2.6.0"
+    "react-native-windows": "0.68.26"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -27,7 +26,6 @@
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/jest": "^26.0.23",
     "@types/react-native": "^0.67.3",
-    "@types/react-plotly.js": "^2.6.0",
     "@types/react-test-renderer": "^17.0.1",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
